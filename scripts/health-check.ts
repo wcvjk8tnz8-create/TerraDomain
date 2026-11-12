@@ -116,6 +116,11 @@ check(/body\.topbar-hidden \.topbar-reveal/.test(glass), '顶栏收起后仍有�
 check(/getElementById\('tbStow'\)/.test(runtime) && /getElementById\('tbReveal'\)/.test(runtime) && /getElementById\('sideCollapse'\)/.test(runtime), '顶栏收起钮 / 唤回把手 / 侧栏折叠钮均已挂载');
 check(/td_side_collapsed/.test(runtime) && /td_topbar_hidden/.test(runtime), '顶栏与侧栏收起状态写入 localStorage');
 check(/body\.side-collapsed/.test(glass) && /side-item::after/.test(glass), '侧栏折叠成图标条且悬停显示名称');
+const sideDock = (glass.match(/#sideCollapse\s*\{[^}]*position:\s*sticky[^}]*\}/s) || [''])[0];
+check(/\.sidebar\s*\{[^}]*flex-direction:\s*column/s.test(glass), '浮岛侧栏为 flex 列，滚动只发生在浮岛内部');
+check(/position:\s*sticky/.test(sideDock) && /bottom:\s*0/.test(sideDock), '收起侧边栏按钮 sticky 固定在浮岛底部');
+check(/margin-top:\s*auto/.test(sideDock) && /flex:\s*0 0 auto/.test(sideDock), '收起按钮不被菜单挤走、也不被压缩');
+check(/backdrop-filter:\s*var\(--lg-blur-sm\)/.test(sideDock), '固定按钮带玻璃底，滚动内容不会透字');
 check(/'收起顶栏':\s*'Hide toolbar'/.test(read('src/app/lib/dict.en.ts')), '新增控制按钮有英文词条');
 check(/\.side-toggle \{ display: none !important; \}/.test(glass), '桌面/平板隐藏孤立汉堡按钮');
 check(/#bellBtn/.test(runtime) && /insertBefore\(b, bell\)/.test(runtime), '主题按钮归入右侧图标组');

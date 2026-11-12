@@ -229,6 +229,9 @@ body.topbar-hidden .home-top {
   width: var(--lg-side-w) !important;
   height: auto !important;
   padding: 18px 12px !important;
+  /* 浮岛自身是唯一滚动容器：收起钮用 sticky 贴在底部，菜单再长也不会把它顶走 */
+  display: flex !important;
+  flex-direction: column !important;
   overflow-y: auto !important;
   overscroll-behavior: contain;
   border: 1px solid var(--lg-stroke) !important;
@@ -732,15 +735,23 @@ body.topbar-hidden .sidebar {
     justify-content: flex-start !important;
     gap: 9px !important;
     width: calc(100% - 8px) !important;
+    /* 固定在浮岛底部：flex 末项 + sticky，菜单滚到哪一颗都点得到 */
+    flex: 0 0 auto !important;
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 8 !important;
     margin: 10px 4px 2px !important;
+    margin-top: auto !important;
     padding: 9px 12px !important;
     border: 1px solid var(--lg-stroke) !important;
     border-radius: 14px !important;
-    background: var(--lg-glass-soft) !important;
+    background: var(--lg-glass) !important;
+    backdrop-filter: var(--lg-blur-sm) !important;
+    -webkit-backdrop-filter: var(--lg-blur-sm) !important;
     color: var(--lg-muted) !important;
     font-size: 12.5px !important;
     letter-spacing: .02em;
-    box-shadow: none !important;
+    box-shadow: 0 -10px 22px -14px rgba(31, 91, 67, .34) !important;
     transition: color .28s var(--td-ease-soft, ease),
                 background .28s var(--td-ease-soft, ease) !important;
   }
